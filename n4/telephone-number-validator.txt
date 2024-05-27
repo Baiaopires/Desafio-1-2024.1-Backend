@@ -1,0 +1,44 @@
+function telephoneCheck(str) {
+  let preproc = str.replace(/\s+/g, '');
+  let possible_sizes = [10, 12, 13];
+  let justnumbers = preproc.match(/[0-9]/g);
+
+  preproc = preproc.split('');
+  console.log(preproc.length);
+
+  if(((justnumbers.length < 10) || (justnumbers.length > 11))
+       || ((justnumbers.length == 11) && (justnumbers[0] != 1))){
+    return false;
+  }
+
+  else if(justnumbers.length == 11){
+    justnumbers.shift();
+    preproc.shift();
+  }
+
+  for(var i = 0; i < 3; i++){
+    if(preproc.length == possible_sizes[i]){
+      break;
+    }
+  }
+
+  if(i == 3){
+    return false;
+  }
+
+  else if(possible_sizes[i] == 10){
+    return true;
+  }
+  else if(possible_sizes[i] == 12){
+    if(preproc[3] != "-" || preproc[7] != "-"){
+      return false;
+    }
+  }
+  else if(possible_sizes[i] == 13){
+    if(preproc[0] != "(" || preproc[4] != ")" || preproc[8] != "-"){
+      return false;
+    }
+  }
+  
+  return true;
+}

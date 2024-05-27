@@ -1,0 +1,24 @@
+function palindrome(str) {
+  str = str.toLowerCase();
+  const regex = /[a-z0-9]/ig;
+  str = str.match(regex);
+
+  if(Number.isInteger((str.length)/2) == false){
+    for(let i = 0; i < (str.length + 1)/2; i++){
+      console.log(str[i]);
+      console.log(str[str.length - i - 1]);
+      if(str[i] != str[str.length - i - 1]){
+        return false;
+      }
+    }
+  }
+  else{
+    for(let i = 0; i < str.length; i++){
+      if(str[i] != str[str.length - i - 1]){
+        return false;
+      }
+    }
+  }
+
+  return true;
+}

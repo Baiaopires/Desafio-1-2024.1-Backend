@@ -1,0 +1,166 @@
+function checkCashRegister(price, cash, cid) {
+  let change = [];
+  let difference = cash - price;
+  let total_money = 0;
+
+  for(let i = 0; i < cid.length; i++){
+    total_money += cid[i][1];
+  }
+
+  if(total_money < difference){
+    return { status: "INSUFFICIENT_FUNDS", change: [] };
+  }
+
+  else if(total_money == difference){
+    return { status: "CLOSED", change: cid};
+  }
+
+  let num = difference;
+
+  if((num / 100) > 0){
+    let i = 0;
+
+    for(i = 0; i < Math.floor(num / 100); i++){
+      if(cid[cid.length - 1][1] != 0){
+        cid[cid.length - 1][1] -= 100;
+      }
+      else{
+        break;
+      }
+    }
+    num -= i * 100;
+    num = Math.round((num + Number.EPSILON) * 100) / 100;
+    if(i > 0) change.push(["ONE HUNDRED", i * 100]);
+  }
+
+  if((num / 20) > 0){
+    let i = 0;
+      for(i = 0; i < Math.floor(num / 20); i++){
+        if(cid[cid.length - 2][1] != 0){
+          cid[cid.length - 2][1] -= 20;
+        }
+        else{
+          break;
+        }
+      }
+    num -= i * 20;
+    num = Math.round((num + Number.EPSILON) * 100) / 100;
+    if(i > 0) change.push(["TWENTY", i * 20]);
+  }
+  if((num / 10) > 0){
+    let i = 0;
+      for(i = 0; i < Math.floor(num / 10); i++){
+        if(cid[cid.length - 3][1] != 0){
+          cid[cid.length - 3][1] -= 10;
+        }
+        else{
+          break;
+        }
+      }
+    num -= i * 10;
+    num = Math.round((num + Number.EPSILON) * 100) / 100;
+    if(i > 0) change.push(["TEN", i * 10]);
+  }
+  
+  if((num / 5) > 0){
+    let i = 0;
+      for(i = 0; i < Math.floor(num / 5); i++){
+        if(cid[cid.length - 4][1] != 0){
+          cid[cid.length - 4][1] -= 5;
+        }
+        else{
+          break;
+        }
+      }
+    num -= i * 5;
+    num = Math.round((num + Number.EPSILON) * 100) / 100;
+    if(i > 0) change.push(["FIVE", i * 5]);
+  }
+
+  if((num / 1) > 0){
+    let i = 0;
+      for(i = 0; i < Math.floor(num / 1); i++){
+        if(cid[cid.length - 5][1] != 0){
+          cid[cid.length - 5][1] -= 1;
+        }
+        else{
+          break;
+        }
+      }
+    num -= i * 1;
+    num = Math.round((num + Number.EPSILON) * 100) / 100;
+    if(i > 0) change.push(["ONE", i * 1]);
+  }
+
+  if((num / 0.25) > 0){
+    let i = 0;
+      for(i = 0; i < Math.floor(num / 0.25); i++){
+        if(cid[cid.length - 6][1] != 0){
+          cid[cid.length - 6][1] -= 0.25;
+        }
+        else{
+          break;
+        }
+      }
+    num -= i * 0.25;
+    num = Math.round((num + Number.EPSILON) * 100) / 100;
+    if(i > 0) change.push(["QUARTER", i * 0.25]);
+  }
+
+  if((num / 0.1) > 0){
+    let i = 0;
+      for(i = 0; i < Math.floor(num / 0.1); i++){
+        if(cid[cid.length - 7][1] != 0){
+          cid[cid.length - 7][1] -= 0.1;
+        }
+        else{
+          break;
+        }
+      }
+    num -= i * 0.1;
+    num = Math.round((num + Number.EPSILON) * 100) / 100;
+    if(i > 0) change.push(["DIME", i * 0.1]);
+  }
+
+  if((num / 0.05) > 0){
+    let i = 0;
+      for(i = 0; i < Math.floor(num / 0.05); i++){
+        if(cid[cid.length - 8][1] != 0){
+          cid[cid.length - 8][1] -= 0.05;
+        }
+        else{
+          break;
+        }
+      }
+    num -= i * 0.05;
+    num = Math.round((num + Number.EPSILON) * 100) / 100;
+    if(i > 0) change.push(["NICKEL", i * 0.05]);
+  }
+
+  if((num / 0.01) > 0){
+    let i = 0;
+      for(i = 0; i < Math.floor(num / 0.01); i++){
+        if(cid[cid.length - 9][1] != 0){
+          cid[cid.length - 9][1] -= 0.01;
+        }
+        else{
+          break;
+        }
+      }
+    num -= i * 0.05;
+    num = Math.round((num + Number.EPSILON) * 100) / 100;
+    if(i > 0) change.push(["PENNY", i * 0.01]);
+  }
+
+  let money_changed = 0;
+
+  for(let i = 0; i < change.length; i++){
+    money_changed += change[i][1];
+  }
+
+  if(money_changed < difference){
+    return { status: "INSUFFICIENT_FUNDS", change: [] };
+  }
+
+  return { status: "OPEN", change: change };
+}
